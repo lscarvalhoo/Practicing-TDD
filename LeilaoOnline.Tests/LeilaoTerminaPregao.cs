@@ -1,9 +1,4 @@
 ﻿using LeilaoOnline.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace LeilaoOnline.Tests
@@ -20,6 +15,7 @@ namespace LeilaoOnline.Tests
             var leilao = new Leilao("Van Gogh");
             var pessoa = new Interessada("Jao", leilao);
 
+            leilao.IniciaPregao();
             foreach (var valor in ofertas)
             {
                 leilao.RecebeLance(pessoa, valor);
@@ -38,6 +34,7 @@ namespace LeilaoOnline.Tests
         {
             //Arange 
             var leilao = new Leilao("Van Gogh");
+            leilao.IniciaPregao();
 
             //Act
             leilao.TerminaPregao();
