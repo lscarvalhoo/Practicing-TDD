@@ -7,6 +7,34 @@ namespace LeilaoOnline.Tests
     public class LeilaoTerminaPregao
     {
         [Theory]
+        [InlineData(1200, 1400, new double[] { 800, 1150, 1400, 1250 })]
+        public void RetornaValorSuperiorMaisProximo(
+            double valorDestino,
+            double valorEsperado,
+            double[] ofertas)
+        {
+            //Arrange
+            var leilao = new Leilao("Leo D. Vinci");
+            var pessoa = new Interessada("LeO.o", leilao);
+            var pessoa2 = new Interessada("Maria", leilao);
+            leilao.IniciaPregao();
+
+            for (int i = 0; i < ofertas.Length; i++)
+            {
+                if ((i % 2 == 0))
+                    leilao.RecebeLance(pessoa, ofertas[i]);
+                else
+                    leilao.RecebeLance(pessoa2, ofertas[i]);
+            }
+
+            //Act
+            leilao.TerminaPregao();
+
+            //Assert
+            Assert.Equal(valorEsperado, leilao.Ganhador.Valor);
+        }
+
+        [Theory]
         [InlineData(1200, new double[] { 800, 900, 1000, 1200 })]
         [InlineData(1000, new double[] { 800, 900, 1000, 990 })]
         [InlineData(800, new double[] { 800 })]
@@ -54,6 +82,7 @@ namespace LeilaoOnline.Tests
             );
 
             var msgEsperada = "Não é possível terminar o pregão sem que ele tenha começado. Para isso, utilize o método IniciaPregao().";
+
             Assert.Equal(msgEsperada, excecaoObtida.Message);
         }
 
