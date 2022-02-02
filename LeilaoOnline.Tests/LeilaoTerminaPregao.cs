@@ -1,4 +1,5 @@
 ﻿using LeilaoOnline.Core;
+using System;
 using Xunit;
 
 namespace LeilaoOnline.Tests
@@ -41,12 +42,29 @@ namespace LeilaoOnline.Tests
         }
 
         [Fact]
+        public void LancaInvalidOperationExceptionDadoPregaoNaoIniciado()
+        {
+            //Arranje  
+            var leilao = new Leilao("Van Gogh");
+
+            //Assert
+            var excecaoObtida = Assert.Throws<System.InvalidOperationException>(
+                //Act  
+                () => leilao.TerminaPregao()
+            );
+
+            var msgEsperada = "Não é possível terminar o pregão sem que ele tenha começado. Para isso, utilize o método IniciaPregao().";
+            Assert.Equal(msgEsperada, excecaoObtida.Message);
+        }
+
+        [Fact]
         public void RetornaZeroDadoLeilaoSemLances()
         {
             //Arranje 
             var leilao = new Leilao("Van Gogh");
+            leilao.IniciaPregao();
 
-            //Act 
+            //Act
             leilao.TerminaPregao();
 
             //Assert
