@@ -48,7 +48,7 @@ namespace LeilaoOnline.Tests
             var leilao = new Leilao("Van Gogh");
 
             //Assert
-            var excecaoObtida = Assert.Throws<System.InvalidOperationException>(
+            var excecaoObtida = Assert.Throws<InvalidOperationException>(
                 //Act  
                 () => leilao.TerminaPregao()
             );
