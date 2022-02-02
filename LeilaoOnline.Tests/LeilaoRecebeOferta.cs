@@ -7,6 +7,24 @@ namespace LeilaoOnline.Tests
     public class LeilaoRecebeOferta
     {
         [Fact]
+        public void NaoAceitaProximoLanceCasoSejaMesmoCliente()
+        {
+            //Arange 
+            var leilao = new Leilao("Van Gogh");
+            var interessado = new Interessada("Leo", leilao); 
+            leilao.RecebeLance(interessado, 800); 
+             
+            //Act
+            leilao.RecebeLance(interessado, 1000);
+
+            //Assert
+            var valorEsperado = 1;
+            var valorObtido = leilao.Lances.Count();
+
+            Assert.Equal(valorEsperado, valorObtido);
+        }
+
+        [Fact]
         public void NaoPermiteNovosLancesQuandoFinalizado()
         {
             //Arange 
@@ -38,12 +56,26 @@ namespace LeilaoOnline.Tests
             //Arange 
             var leilao = new Leilao("Van Gogh");
             var interessado = new Interessada("Leo", leilao);
+            var interessado2 = new Interessada("Maria", leilao);
             leilao.IniciaPregao();
 
-            foreach (var valor in ofertas)
+            for (int i = 0; i < ofertas.Length; i++)
             {
-                leilao.RecebeLance(interessado, valor);
+                if ((i % 2) ==0 )
+                {
+                    leilao.RecebeLance(interessado, 800);
+                }
+                else
+                {
+                    leilao.RecebeLance(interessado2, 900);
+                }
+
             }
+
+            //foreach (var valor in ofertas)
+            //{
+            //    leilao.RecebeLance(interessado, valor);
+            //}
             leilao.TerminaPregao();
 
             //Act
