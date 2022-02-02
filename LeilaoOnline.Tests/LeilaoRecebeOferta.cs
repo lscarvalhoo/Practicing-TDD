@@ -10,7 +10,8 @@ namespace LeilaoOnline.Tests
         public void NaoAceitaProximoLanceDadoMesmoClienteRealizouUltimoLance()
         {
             //Arranje 
-            var leilao = new Leilao("Van Gogh");
+            var modalidade = new MaiorValor();
+            var leilao = new Leilao("Van Gogh", modalidade);
             var pessoa = new Interessada("Leo", leilao);
             leilao.IniciaPregao();
             leilao.RecebeLance(pessoa, 800);
@@ -28,7 +29,8 @@ namespace LeilaoOnline.Tests
         public void NaoPermiteNovosLancesQuandoFinalizado()
         {
             //Arange 
-            var leilao = new Leilao("Van Gogh");
+            var modalidade = new MaiorValor();
+            var leilao = new Leilao("Van Gogh", modalidade);
             var interessado = new Interessada("Leo", leilao);
             var interessado2 = new Interessada("Leo", leilao);
 
@@ -54,7 +56,8 @@ namespace LeilaoOnline.Tests
             int quantidadeEsperada, double[] ofertas)
         {
             //Arange 
-            var leilao = new Leilao("Van Gogh");
+            var modalidade = new MaiorValor();
+            var leilao = new Leilao("Van Gogh", modalidade);
             var interessado = new Interessada("Leo", leilao);
             var interessado2 = new Interessada("Maria", leilao);
             leilao.IniciaPregao();

@@ -7,14 +7,16 @@ namespace LeilaoOnline.Tests
     public class LeilaoTerminaPregao
     {
         [Theory]
-        [InlineData(1200, 1400, new double[] { 800, 1150, 1400, 1250 })]
+        [InlineData(1200, 1250, new double[] { 800, 1150, 1400, 1250 })]
         public void RetornaValorSuperiorMaisProximo(
             double valorDestino,
             double valorEsperado,
             double[] ofertas)
         {
             //Arrange
-            var leilao = new Leilao("Leo D. Vinci");
+            IModalidadeAvaliacao modalidade = new OfertaSuperiorMaisProxima(valorDestino);
+
+            var leilao = new Leilao("Leo D. Vinci", modalidade);
             var pessoa = new Interessada("LeO.o", leilao);
             var pessoa2 = new Interessada("Maria", leilao);
             leilao.IniciaPregao();
@@ -43,7 +45,8 @@ namespace LeilaoOnline.Tests
             double[] ofertas)
         {
             //Arranje
-            var leilao = new Leilao("Van Gogh");
+            IModalidadeAvaliacao modalidade = new MaiorValor();
+            var leilao = new Leilao("Van Gogh", modalidade);
             var pessoa = new Interessada("Leo", leilao);
             var pessoa2 = new Interessada("Maria", leilao);
             leilao.IniciaPregao();
@@ -73,7 +76,8 @@ namespace LeilaoOnline.Tests
         public void LancaInvalidOperationExceptionDadoPregaoNaoIniciado()
         {
             //Arranje  
-            var leilao = new Leilao("Van Gogh");
+            var modalidade = new MaiorValor();
+            var leilao = new Leilao("Van Gogh", modalidade);
 
             //Assert
             var excecaoObtida = Assert.Throws<InvalidOperationException>(
@@ -90,7 +94,8 @@ namespace LeilaoOnline.Tests
         public void RetornaZeroDadoLeilaoSemLances()
         {
             //Arranje 
-            var leilao = new Leilao("Van Gogh");
+            var modalidade = new MaiorValor();
+            var leilao = new Leilao("Van Gogh", modalidade);
             leilao.IniciaPregao();
 
             //Act

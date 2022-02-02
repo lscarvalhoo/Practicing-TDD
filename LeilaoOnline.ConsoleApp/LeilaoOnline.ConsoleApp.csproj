@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Practicing-TDD-master\Practicing-TDD-master\LeilaoOnline.Core\LeilaoOnline.Core.csproj" />
+    <ProjectReference Include="..\LeilaoOnline.Tests\LeilaoOnline.Tests.csproj" />
   </ItemGroup>
 
 </Project>
